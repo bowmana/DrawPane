@@ -1,11 +1,10 @@
 package hw7;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polyline;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 public class Drawing extends Application {
@@ -23,40 +22,37 @@ public class Drawing extends Application {
 	class DrawPane extends Pane {
 		public DrawPane() {
 
-			Polyline line = new Polyline(100.0, 100.0);
+			Line line = new Line(10, 10, 10, 10);
 
+			line.setStrokeWidth(1);
 			line.setStroke(Color.BLACK);
 			line.setFill(Color.WHITE);
-
-			ObservableList<Double> list = line.getPoints();
+			line.setStartX(100.0);
+			line.setStartY(100.0);
+			line.setEndX(100.0);
+			line.setEndY(100.0);
 
 			this.setOnKeyPressed(e -> {
-				double x = 0, y = 0;
-				
+
 				switch (e.getCode()) {
 				case DOWN:
-					x = list.get(list.size() - 2);
-					y = list.get(list.size() - 1) + 10;
+
+					line.setEndY(line.getEndY() + 10);
 					break;
+
 				case UP:
-					x = list.get(list.size() - 2);
-					y = list.get(list.size() - 1) -10; 
+					line.setStartY(line.getStartY() - 10);
 					break;
 				case RIGHT:
-					x = list.get(list.size() - 2) +10; 
-					y = list.get(list.size() - 1);
+					line.setEndX(line.getEndX() + 10);
 					break;
 				case LEFT:
-					x = list.get(list.size() - 2) -10; 
-					y = list.get(list.size() - 1);
+					line.setStartX(line.getStartX() - 10);
 					break;
 				default:
 					break;
 
 				}
-
-				list.add(x);
-				list.add(y);
 
 			});
 			this.getChildren().add(line);
